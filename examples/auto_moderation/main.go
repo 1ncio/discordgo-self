@@ -8,7 +8,7 @@ import (
 	"os/signal"
 	"sync"
 
-	"github.com/bwmarrin/discordgo"
+	"github.com/1ncio/discordgo-self"
 )
 
 // Command line flags
