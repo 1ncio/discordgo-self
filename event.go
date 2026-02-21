@@ -102,12 +102,14 @@ func (s *Session) addEventHandlerOnce(eventHandler EventHandler) func() {
 // to a struct corresponding to the event for which you want to listen.
 //
 // eg:
-//     Session.AddHandler(func(s *discordgo.Session, m *discordgo.MessageCreate) {
-//     })
+//
+//	Session.AddHandler(func(s *discordgo.Session, m *discordgo.MessageCreate) {
+//	})
 //
 // or:
-//     Session.AddHandler(func(s *discordgo.Session, m *discordgo.PresenceUpdate) {
-//     })
+//
+//	Session.AddHandler(func(s *discordgo.Session, m *discordgo.PresenceUpdate) {
+//	})
 //
 // List of events can be found at this page, with corresponding names in the
 // library for each event: https://discord.com/developers/docs/topics/gateway#event-names
@@ -243,7 +245,7 @@ func (s *Session) onInterface(i interface{}) {
 func (s *Session) onReady(r *Ready) {
 
 	// Store the SessionID within the Session struct.
-	s.sessionID = r.SessionID
+	s.SessionID = r.SessionID
 
 	// Store the ResumeGatewayURL within the Session struct.
 	s.resumeGatewayURL = r.ResumeGatewayURL

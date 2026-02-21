@@ -66,7 +66,7 @@ func (s *Session) Open() error {
 
 	var gateway string
 	// Get the gateway to use for the Websocket connection
-	if sequence != 0 && s.sessionID != "" && s.resumeGatewayURL != "" {
+	if sequence != 0 && s.SessionID != "" && s.resumeGatewayURL != "" {
 		s.log(LogDebug, "using resume gateway %s", s.resumeGatewayURL)
 		gateway = s.resumeGatewayURL
 	} else {
@@ -133,7 +133,7 @@ func (s *Session) Open() error {
 
 	// Now we send either an Op 2 Identity if this is a brand new
 	// connection or Op 6 Resume if we are resuming an existing connection.
-	if s.sessionID == "" && sequence == 0 {
+	if s.SessionID == "" && sequence == 0 {
 
 		// Send Op 2 Identity Packet
 		err = s.identify()
@@ -148,7 +148,7 @@ func (s *Session) Open() error {
 		p := resumePacket{}
 		p.Op = 6
 		p.Data.Token = s.Token
-		p.Data.SessionID = s.sessionID
+		p.Data.SessionID = s.SessionID
 		p.Data.Sequence = sequence
 
 		s.log(LogInformational, "sending resume packet to gateway")
@@ -637,7 +637,7 @@ func (s *Session) onEvent(messageType int, message []byte) (*Event, error) {
 		if !resumable {
 			s.log(LogInformational, "Gateway session is not resumable, discarding its information")
 			s.resumeGatewayURL = ""
-			s.sessionID = ""
+			s.SessionID = ""
 			atomic.StoreInt64(s.sequence, 0)
 		}
 
@@ -714,10 +714,10 @@ type voiceChannelJoinOp struct {
 
 // ChannelVoiceJoin joins the session user to a voice channel.
 //
-//    gID     : Guild ID of the channel to join.
-//    cID     : Channel ID of the channel to join.
-//    mute    : If true, you will be set to muted upon joining.
-//    deaf    : If true, you will be set to deafened upon joining.
+//	gID     : Guild ID of the channel to join.
+//	cID     : Channel ID of the channel to join.
+//	mute    : If true, you will be set to muted upon joining.
+//	deaf    : If true, you will be set to deafened upon joining.
 func (s *Session) ChannelVoiceJoin(gID, cID string, mute, deaf bool) (voice *VoiceConnection, err error) {
 
 	s.log(LogInformational, "called")
@@ -761,10 +761,10 @@ func (s *Session) ChannelVoiceJoin(gID, cID string, mute, deaf bool) (voice *Voi
 //
 // This should only be used when the VoiceServerUpdate will be intercepted and used elsewhere.
 //
-//    gID     : Guild ID of the channel to join.
-//    cID     : Channel ID of the channel to join, leave empty to disconnect.
-//    mute    : If true, you will be set to muted upon joining.
-//    deaf    : If true, you will be set to deafened upon joining.
+//	gID     : Guild ID of the channel to join.
+//	cID     : Channel ID of the channel to join, leave empty to disconnect.
+//	mute    : If true, you will be set to muted upon joining.
+//	deaf    : If true, you will be set to deafened upon joining.
 func (s *Session) ChannelVoiceJoinManual(gID, cID string, mute, deaf bool) (err error) {
 
 	s.log(LogInformational, "called")

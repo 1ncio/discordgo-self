@@ -133,7 +133,7 @@ type Session struct {
 	gateway string
 
 	// stores session ID of current Gateway connection
-	sessionID string
+	SessionID string
 
 	// used to make sure gateway websocket writes do not happen concurrently
 	wsMutex sync.Mutex

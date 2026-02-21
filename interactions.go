@@ -219,7 +219,7 @@ const (
 
 // Interaction represents data of an interaction.
 type Interaction struct {
-	ID        string          `json:"id"`
+	ID        string          `json:"id,omitempty"`
 	AppID     string          `json:"application_id"`
 	Type      InteractionType `json:"type"`
 	Data      InteractionData `json:"data"`
@@ -228,37 +228,42 @@ type Interaction struct {
 
 	// The message on which interaction was used.
 	// NOTE: this field is only filled when a button click triggered the interaction. Otherwise it will be nil.
-	Message *Message `json:"message"`
+	Message *Message `json:"message,omitempty"`
 
 	// Bitwise set of permissions the app or bot has within the channel the interaction was sent from
-	AppPermissions int64 `json:"app_permissions,string"`
+	AppPermissions int64 `json:"app_permissions,string,omitempty"`
 
 	// The member who invoked this interaction.
 	// NOTE: this field is only filled when the slash command was invoked in a guild;
 	// if it was invoked in a DM, the `User` field will be filled instead.
 	// Make sure to check for `nil` before using this field.
-	Member *Member `json:"member"`
+	Member *Member `json:"member,omitempty"`
 	// The user who invoked this interaction.
 	// NOTE: this field is only filled when the slash command was invoked in a DM;
 	// if it was invoked in a guild, the `Member` field will be filled instead.
 	// Make sure to check for `nil` before using this field.
-	User *User `json:"user"`
+	User *User `json:"user,omitempty"`
 
 	// The user's discord client locale.
-	Locale Locale `json:"locale"`
+	Locale Locale `json:"locale,omitempty"`
 	// The guild's locale. This defaults to EnglishUS
 	// NOTE: this field is only filled when the interaction was invoked in a guild.
-	GuildLocale *Locale `json:"guild_locale"`
+	GuildLocale *Locale `json:"guild_locale,omitempty"`
 
-	Context                      InteractionContextType                `json:"context"`
-	AuthorizingIntegrationOwners map[ApplicationIntegrationType]string `json:"authorizing_integration_owners"`
+	Context                      InteractionContextType                `json:"context,omitempty"`
+	AuthorizingIntegrationOwners map[ApplicationIntegrationType]string `json:"authorizing_integration_owners,omitempty"`
 
-	Token   string `json:"token"`
-	Version int    `json:"version"`
+	Token   string `json:"token,omitempty"`
+	Version int    `json:"version,omitempty"`
 
 	// Any entitlements for the invoking user, representing access to premium SKUs.
 	// NOTE: this field is only filled in monetized apps
-	Entitlements []*Entitlement `json:"entitlements"`
+	Entitlements []*Entitlement `json:"entitlements,omitempty"`
+
+	// These fields are relevant for sending an interaction request
+	SessionID string `json:"session_id"`
+	Nonce     string `json:"nonce"`
+	MessageID string `json:"message_id"`
 }
 
 type interaction Interaction
@@ -383,10 +388,10 @@ func (ApplicationCommandInteractionData) Type() InteractionType {
 type MessageComponentInteractionData struct {
 	CustomID      string                           `json:"custom_id"`
 	ComponentType ComponentType                    `json:"component_type"`
-	Resolved      ComponentInteractionDataResolved `json:"resolved"`
+	Resolved      ComponentInteractionDataResolved `json:"resolved,omitempty"`
 
 	// NOTE: Only filled when ComponentType is SelectMenuComponent (3). Otherwise is nil.
-	Values []string `json:"values"`
+	Values []string `json:"values,omitempty"`
 }
 
 // ComponentInteractionDataResolved contains the resolved data of selected option.
