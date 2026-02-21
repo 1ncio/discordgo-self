@@ -3776,3 +3776,11 @@ func (s *Session) UserVoiceState(guildID string, userID string, options ...Reque
 	err = unmarshal(body, &state)
 	return
 }
+
+// https://docs.discord.food/interactions/receiving-and-responding#sendable-message-component-data-structure
+// this is in data
+
+func (s *Session) SelfClickInteractionButton(interaction *Interaction) (err error) {
+	_, err = s.Request("POST", SelfEndpointInteraction, interaction)
+	return
+}

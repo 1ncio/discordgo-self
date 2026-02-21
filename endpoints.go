@@ -229,6 +229,7 @@ var (
 	EndpointInteractionResponse = func(iID, iToken string) string {
 		return EndpointInteraction(iID, iToken) + "/callback"
 	}
+	SelfEndpointInteraction            = EndpointAPI + "interactions/"
 	EndpointInteractionResponseActions = func(aID, iToken string) string {
 		return EndpointWebhookMessage(aID, iToken, "@original")
 	}
