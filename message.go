@@ -554,8 +554,9 @@ func (m *Message) ContentWithMentionsReplaced() (content string) {
 	return
 }
 
-// LookUpButtonByLabel looks up a button by its lable.
-func (m *Message) LookUpButtonByLabel(name string) (*Button, bool) {
+// Buttons returns all buttons on a message.
+func (m *Message) Buttons() []*Button {
+	var buttons []*Button
 	for _, component := range m.Components {
 		if component.Type() != ActionsRowComponent {
 			continue
@@ -565,13 +566,10 @@ func (m *Message) LookUpButtonByLabel(name string) (*Button, bool) {
 			if actionRowComponent.Type() != ButtonComponent {
 				continue
 			}
-			button := actionRowComponent.(*Button)
-			if button.Label == name {
-				return button, true
-			}
+			buttons = append(buttons, actionRowComponent.(*Button))
 		}
 	}
-	return nil, false
+	return buttons
 }
 
 var patternChannels = regexp.MustCompile("<#[^>]*>")
