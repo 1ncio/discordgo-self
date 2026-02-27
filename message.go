@@ -555,23 +555,22 @@ func (m *Message) ContentWithMentionsReplaced() (content string) {
 }
 
 // LookUpButtonByLabel looks up a button by its lable.
-func (m *Message) LookUpButtonByLabel(name string) (b Button, found bool) {
+func (m *Message) LookUpButtonByLabel(name string) (*Button, bool) {
 	for _, component := range m.Components {
 		if component.Type() != ActionsRowComponent {
 			continue
 		}
-		actionRowComponents := component.(ActionsRow).Components
+		actionRowComponents := component.(*ActionsRow).Components
 		for _, actionRowComponent := range actionRowComponents {
 			if actionRowComponent.Type() != ButtonComponent {
 				continue
 			}
-			button := actionRowComponent.(Button)
+			button := actionRowComponent.(*Button)
 			if button.Label == name {
 				return button, true
 			}
 		}
 	}
-	return
 }
 
 var patternChannels = regexp.MustCompile("<#[^>]*>")
