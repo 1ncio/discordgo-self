@@ -554,6 +554,26 @@ func (m *Message) ContentWithMentionsReplaced() (content string) {
 	return
 }
 
+// LookUpButtonByLabel looks up a button by its lable.
+func (m *Message) LookUpButtonByLabel(name string) (b Button, found bool) {
+	for _, component := range m.Components {
+		if component.Type() != ActionsRowComponent {
+			continue
+		}
+		actionRowComponents := component.(ActionsRow).Components
+		for _, actionRowComponent := range actionRowComponents {
+			if actionRowComponent.Type() != ButtonComponent {
+				continue
+			}
+			button := actionRowComponent.(Button)
+			if button.Label == name {
+				return button, true
+			}
+		}
+	}
+	return
+}
+
 var patternChannels = regexp.MustCompile("<#[^>]*>")
 
 // ContentWithMoreMentionsReplaced will replace all @<id> mentions with the
