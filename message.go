@@ -571,6 +571,7 @@ func (m *Message) LookUpButtonByLabel(name string) (*Button, bool) {
 			}
 		}
 	}
+	return nil, false
 }
 
 var patternChannels = regexp.MustCompile("<#[^>]*>")
