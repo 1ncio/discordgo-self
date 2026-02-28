@@ -261,9 +261,10 @@ type Interaction struct {
 	Entitlements []*Entitlement `json:"entitlements,omitempty"`
 
 	// These fields are relevant for sending an interaction request
-	SessionID string `json:"session_id"`
-	Nonce     string `json:"nonce"`
-	MessageID string `json:"message_id"`
+	SessionID    string       `json:"session_id"`
+	Nonce        string       `json:"nonce"`
+	MessageID    string       `json:"message_id"`
+	MessageFlags MessageFlags `json:"message_flags"`
 }
 
 type interaction Interaction
